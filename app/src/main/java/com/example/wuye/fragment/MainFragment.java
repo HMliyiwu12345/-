@@ -1,37 +1,21 @@
 package com.example.wuye.fragment;
 
-import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
-
-import com.example.wuye.bean.SelectNews;
-import com.example.wuye.bean.WaitEvent;
 import com.example.wuye.page.BasePager;
-import com.example.wuye.page.MenuBasePager;
 import com.example.wuye.page.impl.GovPager;
 import com.example.wuye.page.impl.NewPager;
 import com.example.wuye.page.impl.ServicePager;
 import com.example.wuye.page.impl.SettingPager;
 import com.example.wuye.page.impl.TablePager;
-import com.example.wuye.page.menuimpl.InteractMenuPager;
-import com.example.wuye.page.menuimpl.NewMenuPager;
-import com.example.wuye.page.menuimpl.PhoteMenuPager;
-import com.example.wuye.page.menuimpl.TopicMenuPager;
+import com.example.wuye.util.ConstantUtil;
+import com.example.wuye.util.SpUtil;
 import com.example.wuye.view.NullSlideViewPager;
 import com.example.wuye.view.SlideMenu;
 import com.example.wuye.zhbj.R;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,9 +81,9 @@ public class MainFragment extends BaseFragment {
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
+                SpUtil.putBoolean(mActivity,ConstantUtil.NEWKEY,false);
                 switch (checkedId) {
                     case R.id.rb_table:
-                        mNewsPager.destory();
                         mViewPager.setCurrentItem(0, false);
                         break;
                     case R.id.rb_new:
@@ -107,19 +91,21 @@ public class MainFragment extends BaseFragment {
                         mViewPager.setCurrentItem(1, false);
                         break;
                     case R.id.rb_service:
-                        mNewsPager.destory();
+
                         mViewPager.setCurrentItem(2, false);
                         break;
                     case R.id.rb_gov:
-                        mNewsPager.destory();
+
                         mViewPager.setCurrentItem(3, false);
                         break;
                     case R.id.rb_setting:
-                        mNewsPager.destory();
                         mViewPager.setCurrentItem(4, false);
                         break;
                     default:
                         break;
+                }
+                if(mViewPager.getCurrentItem()!=1){
+                    mNewsPager.destory();
                 }
             }
         });

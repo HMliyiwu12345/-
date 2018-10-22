@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.wuye.bean.CloseMenu;
+import com.example.wuye.bean.FirstItem;
 import com.example.wuye.bean.NewsMenu;
 import com.example.wuye.bean.SelectNews;
 import com.example.wuye.bean.wuye;
@@ -23,6 +24,8 @@ import com.example.wuye.page.menuimpl.InteractMenuPager;
 import com.example.wuye.page.menuimpl.NewMenuPager;
 import com.example.wuye.page.menuimpl.PhoteMenuPager;
 import com.example.wuye.page.menuimpl.TopicMenuPager;
+import com.example.wuye.util.ConstantUtil;
+import com.example.wuye.util.SpUtil;
 import com.example.wuye.zhbj.MainActivity;
 import com.example.wuye.zhbj.R;
 
@@ -44,7 +47,6 @@ public class SlideFragment extends BaseFragment {
     private NewPager newPager;
 
 
-
     @Override
     public View initView() {
         View view = View.inflate(mActivity, R.layout.slide_fragment_layout, null);
@@ -55,18 +57,18 @@ public class SlideFragment extends BaseFragment {
     @Override
     public void initData() {
         EventBus.getDefault().register(this);
-        //MenuBasePager的封装
-//        listmenus.add(new NewMenuPager(mActivity));
-//        listmenus.add(new TopicMenuPager(mActivity));
-//        listmenus.add(new PhoteMenuPager(mActivity));
-//        listmenus.add(new InteractMenuPager(mActivity));
         mListVIew.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 currentPosition = position;
-                newPager=new NewPager(mActivity);
-
-               EventBus.getDefault().post(new wuye(position));
+                newPager = new NewPager(mActivity);
+                SpUtil.putInt(mActivity,ConstantUtil.SELECTMENUITEM,currentPosition);
+                boolean newsSlideKey=SpUtil.getBoolean(mActivity,ConstantUtil.NEWKEY,false);
+                //发送item的条目索引过去
+                if(newsSlideKey){
+                    EventBus.getDefault().post(new wuye(position));
+                }
+                //发送关闭信息过去
                 EventBus.getDefault().post(new CloseMenu());
                 myAdapter.notifyDataSetInvalidated();
             }
@@ -120,6 +122,10 @@ public class SlideFragment extends BaseFragment {
         }
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void wuye(FirstItem firstItem) {
+       currentPosition=0;
+    }
     @Override
     public void onDestroy() {
         super.onDestroy();
