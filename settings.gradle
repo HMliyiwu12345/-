@@ -1,2 +1,4 @@
 include ':app'
-include ':library'
+include ':viewpagerStyle'
+
+include ':sample'

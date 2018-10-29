@@ -1,6 +1,7 @@
 package com.example.wuye.page;
 
 import android.app.Activity;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -13,7 +14,7 @@ import com.example.wuye.zhbj.R;
  * Created by WUYE on 2018/10/12.
  */
 
-public abstract class MenuBasePager {
+public abstract class MenuBasePager extends FragmentActivity {
     public Activity mActivity;
     public View RootView;
 
