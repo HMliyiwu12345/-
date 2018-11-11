@@ -20,8 +20,11 @@ import com.viewpagerindicator.TitlePageIndicator;
 
 public class NewMenuPager extends MenuBasePager {
 
-    private static final String[] CONTENT = new String[] { "Recent", "Artists", "Albums", "Songs", "Playlists", "Genres" };
 
+    private ViewPager pager;
+    private FragmentPagerAdapter adapter;
+    private View view;
+    private TabPageIndicator indicator;
 
     public NewMenuPager(Activity activity) {
         super(activity);
@@ -34,14 +37,17 @@ public class NewMenuPager extends MenuBasePager {
 //        view.setTextColor(Color.RED);
 //        view.setTextSize(22);
 //        view.setGravity(Gravity.CENTER);
-        View view=View.inflate(mActivity, R.layout.simple_tabs,null);
-        FragmentPagerAdapter adapter = new GoogleMusicAdapter(getSupportFragmentManager());
-        ViewPager pager = (ViewPager)view.findViewById(R.id.pager);
+        view = View.inflate(mActivity, R.layout.simple_tabs,null);
+        adapter = new GoogleMusicAdapter(getSupportFragmentManager());
+        pager = (ViewPager) view.findViewById(R.id.pager);
         pager.setAdapter(adapter);
-
-        TabPageIndicator indicator = (TabPageIndicator)view.findViewById(R.id.indicator);
+        indicator = (TabPageIndicator) view.findViewById(R.id.indicator);
         indicator.setViewPager(pager);
-
         return view;
+    }
+
+    @Override
+    public void initData() {
+
     }
 }

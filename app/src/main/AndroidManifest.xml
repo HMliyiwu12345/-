@@ -25,7 +25,12 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity android:name=".MainActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+            android:theme="@style/StyledIndicators">
+            <!--android:theme="@style/Theme.AppCompat.Light.NoActionBar">-->
+
+            <!--android:theme="@style/Theme.PageIndicatorDefaults"-->
+
+        </activity>
     </application>
 
 </manifest>
